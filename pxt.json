@@ -1,0 +1,28 @@
+{
+    "name": "Bosses gamejam",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "Sprites - objects": "github:N1cachu/sprites---objects#29ffe02e7e0d4059060450746c4907ea45b69b93"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "assets.json",
+        "tilemap.g.jres",
+        "tilemap.g.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": "1.7.24",
+        "pxt": "7.3.26",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "blocksprj"
+}
