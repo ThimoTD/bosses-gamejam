@@ -4,78 +4,22 @@ namespace SpriteKind {
     export const bossattack2 = SpriteKind.create()
 }
 function Bossmad () {
-    bossprojectile = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 2 . . . . . . . . 
-        . . . . . . . 2 2 . . . . . . . 
-        . . . . . . . 2 2 . . . . . . . 
-        . . . . . . . 2 2 2 . . . . . . 
-        . . . 2 . . 2 2 2 2 . . . . . . 
-        . . . . . 2 2 4 2 2 . . . . . . 
-        . . . . 2 2 5 4 2 2 2 . . . . . 
-        . . . . 2 2 5 4 4 5 2 . . . . . 
-        . . . . 2 4 4 4 4 2 4 2 . . . . 
-        . . . . 2 4 4 4 5 2 4 2 . . . . 
-        . . . 2 4 5 5 5 4 5 4 . . 2 . . 
-        . . . 4 4 5 5 5 4 5 2 2 . . . . 
-        . . . . 5 5 5 5 4 4 2 2 . . . . 
-        . . . . 2 5 5 5 5 2 . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Projectile)
+    bossprojectile = sprites.create(assets.image`fireball top`, SpriteKind.Projectile)
     bossprojectile.x = randint(0, scene.screenWidth() - 50)
-    if (Math.percentChance(100)) {
-        bossprojectile.top = scene.screenHeight()
-        bossprojectile.ay = 200
-    }
+    bossprojectile.top = 0
+    bossprojectile.ay = 50
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    weapon = sprites.createProjectileFromSprite(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . 6 9 9 1 . . . . . . . . 
-        . . . . 6 6 9 9 . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, theplayer, 150, 0)
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    weapon = sprites.createProjectileFromSprite(assets.image`bullet`, theplayer, 150, 0)
     weapon.x += 12
 })
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (theplayer.vy == 0) {
+        theplayer.vy = -175
+    }
+})
 function Boss () {
-    theboss = sprites.create(img`
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        222222222222222222222222
-        `, SpriteKind.boss)
+    theboss = sprites.create(assets.image`boss`, SpriteKind.boss)
     theboss.setPosition(150, 50)
     theboss.vy = -20
     theboss.setBounceOnWall(true)
@@ -86,10 +30,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.boss, function (sprite, otherSprite) {
     Bosshp += -1
-    if (Bosshp <= 5) {
+    if (Bosshp == 20) {
         bosshurt = true
     }
     sprite.destroy()
+})
+scene.onHitWall(SpriteKind.Projectile, function (sprite, location) {
+    sprite.destroy(effects.fire, 200)
 })
 let bossjectile2: Sprite = null
 let theboss: Sprite = null
@@ -98,30 +45,23 @@ let bossprojectile: Sprite = null
 let bosshurt = false
 let Bosshp = 0
 let theplayer: Sprite = null
-theplayer = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . f f . . . . . . . 
-    . . . . . . . f f . . . . . . . 
-    . . . . f f f f f f f f . . . . 
-    . . . . f . . f f . . f . . . . 
-    . . . . f . . f f . . f . . . . 
-    . . . . . . . f f . . . . . . . 
-    . . . . . . . f f . . . . . . . 
-    . . . . . . f . . f . . . . . . 
-    . . . . . f f . . f f . . . . . 
-    . . . . f f . . . . f f . . . . 
-    . . . . f . . . . . . f . . . . 
-    `, SpriteKind.Player)
-controller.moveSprite(theplayer, 100, 100)
-info.setLife(3)
-scene.setBackgroundColor(7)
-Bosshp = 10
+theplayer = sprites.create(assets.image`stacy`, SpriteKind.Player)
+info.setLife(5)
+Bosshp = 40
 bosshurt = false
+controller.moveSprite(theplayer, 100, 0)
+theplayer.ay = 400
+tiles.setTilemap(tilemap`level1`)
+scene.setBackgroundImage(assets.image`background`)
 Boss()
+game.onUpdateInterval(1000, function () {
+    if (bosshurt) {
+        Bossmad()
+    }
+    if (Bosshp < 1) {
+        game.over(false)
+    }
+})
 game.onUpdateInterval(1000, function () {
     if (bosshurt) {
         Bossmad()
@@ -131,23 +71,6 @@ game.onUpdateInterval(1000, function () {
     }
 })
 game.onUpdateInterval(800, function () {
-    bossjectile2 = sprites.createProjectileFromSprite(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . 2 2 2 . . . . . . . . . 
-        . . 2 2 2 4 2 2 2 2 . . . . . . 
-        . . 2 2 5 4 4 5 4 2 2 . . . . . 
-        . . 5 5 5 5 5 5 4 4 4 2 2 . . . 
-        . . 5 5 5 5 5 5 5 4 5 4 2 2 . . 
-        . . 5 2 5 5 5 5 4 4 4 2 4 2 2 . 
-        . . 2 2 2 4 5 4 4 2 2 2 2 . . . 
-        . . . 2 2 2 2 2 2 2 . . . . . . 
-        . . . . . 2 2 2 . . . . . . 2 . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . 2 . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, theboss, -100, 0)
-    bossjectile2.x += -20
+    bossjectile2 = sprites.createProjectileFromSprite(assets.image`fireball left`, theboss, -81, 0)
+    bossjectile2.x += -10
 })

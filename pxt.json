@@ -1,9 +1,10 @@
 {
-    "name": "Bosses gamejam",
+    "name": "Bosses gamejam - Copy",
     "description": "",
     "dependencies": {
         "device": "*",
-        "Sprites - objects": "github:N1cachu/sprites---objects#29ffe02e7e0d4059060450746c4907ea45b69b93"
+        "radio-broadcast": "*",
+        "Boss": "github:n1cachu/boss#7249c354b56337ca8316405fdb57be75b598dad8"
     },
     "files": [
         "main.blocks",
@@ -11,7 +12,9 @@
         "README.md",
         "assets.json",
         "tilemap.g.jres",
-        "tilemap.g.ts"
+        "tilemap.g.ts",
+        "images.g.jres",
+        "images.g.ts"
     ],
     "testFiles": [
         "test.ts"
